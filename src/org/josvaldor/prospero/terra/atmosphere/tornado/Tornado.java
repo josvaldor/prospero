@@ -21,7 +21,7 @@ public class Tornado {
 	}
 
 	public List<Event> read() {
-		String target_dir = "./data/tornado/alpha";
+		String target_dir = "./data/atmosphere/tornado/alpha";
 		File dir = new File(target_dir);
 		File[] files = dir.listFiles();
 		List<Event> eventList = new LinkedList<Event>();

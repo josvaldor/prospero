@@ -22,7 +22,7 @@ public class Volcano {
 	}
 
 	public List<Event> read() {
-		String target_dir = "./data/volcano/";
+		String target_dir = "./data/lithosphere/volcano/";
 		File dir = new File(target_dir);
 		File[] files = dir.listFiles();
 		List<Event> eventList = new LinkedList<Event>();

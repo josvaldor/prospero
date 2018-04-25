@@ -43,7 +43,7 @@ public class Continental {
 			String file = getHgtFileName(latitude, longitude);
 			// given area in cache?
 
-			String fullPath = new File("./data/elevation/", file).getPath();
+			String fullPath = new File("./data/lithosphere/continental/", file).getPath();
 			File f = new File(fullPath);
 			ShortBuffer data = readHgtFile(fullPath);
 			this.cache.put(getHgtFileName(latitude, longitude), data);

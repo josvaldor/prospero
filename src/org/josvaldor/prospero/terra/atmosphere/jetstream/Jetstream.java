@@ -29,7 +29,7 @@ public class Jetstream {
     }
 
     public static void processFile() {
-        String filename = "./data/jetstream/netcdf.nc";
+        String filename = "./data/atmosphere/jetstream/netcdf.nc";
         NetcdfFile dataFile = null;
         try {
             dataFile = NetcdfFile.open(filename, null);

@@ -32,7 +32,7 @@ public class JetstreamExperiment {
 	public static int uCount = 0;
 	public static int vCount = 0;
 	public static String startDate = null;
-	public static String fileName = "./data/jetstream/default.nc";
+	public static String fileName = "./data/atmosphere/jetstream/default.nc";
 	public static NetcdfFileWriter netCDFFile;
 
 	public static void main(String[] args) {
