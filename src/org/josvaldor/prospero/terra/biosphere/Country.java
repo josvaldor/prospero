@@ -10,19 +10,16 @@ import org.geotools.data.simple.SimpleFeatureIterator;
 import org.geotools.data.simple.SimpleFeatureSource;
 import org.geotools.filter.text.ecql.ECQL;
 import org.geotools.geometry.jts.JTSFactoryFinder;
-import org.opengis.feature.Feature;
 import org.opengis.feature.simple.SimpleFeature;
 import org.opengis.filter.Filter;
-import org.opengis.geometry.Geometry;
-//import org.geotools.geojson.geom.*;
-
-import org.opengis.geometry.coordinate.Polygon;
 
 import com.vividsolutions.jts.geom.GeometryFactory;
 import com.vividsolutions.jts.geom.MultiPolygon;
 import com.vividsolutions.jts.io.WKTReader;
 
 public class Country {
+
+	private String fileName = "./data/biosphere/country/ne_10m_admin_0_countries/ne_10m_admin_0_countries.shp";
 
 	public static void main(String[] args) {
 		Country a = new Country();
@@ -32,7 +29,7 @@ public class Country {
 
 	public MultiPolygon point(double latitude, double longitude) {
 		MultiPolygon f =null;
-		File file = new File("./data/land/ne_10m_admin_0_countries/ne_10m_admin_0_countries.shp");
+		File file = new File(fileName);
 		try {
 			ShapefileDataStore dataStore = new ShapefileDataStore(file.toURI().toURL());
 			String[] typeNames = dataStore.getTypeNames();
@@ -59,7 +56,7 @@ public class Country {
 	}
 
 	public List<MultiPolygon> box(double latitudeA, double longitudeA, double latitudeB, double longitudeB) {
-		File file = new File("./data/land/ne_10m_admin_0_countries/ne_10m_admin_0_countries.shp");
+		File file = new File(fileName);
 		MultiPolygon f =null;
 		List<MultiPolygon> mList = new LinkedList<MultiPolygon>();
 		try {

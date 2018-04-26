@@ -7,25 +7,17 @@ package org.josvaldor.prospero.terra;
 
 import java.awt.Color;
 import java.awt.Graphics;
-import java.awt.Graphics2D;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Date;
-import java.util.GregorianCalendar;
 import java.util.LinkedList;
 import java.util.List;
 
-import org.josvaldor.prospero.energy.system.Solar;
-//import org.josvaldor.prospero.energy.system.planet.earth.Earth;
-import org.josvaldor.prospero.energy.system.star.sun.Sun;
 import org.josvaldor.prospero.terra.atmosphere.tornado.Tornado;
 import org.josvaldor.prospero.terra.biosphere.City;
 import org.josvaldor.prospero.terra.biosphere.Country;
+import org.josvaldor.prospero.terra.lithosphere.Oceanic;
 import org.josvaldor.prospero.terra.lithosphere.Tectonic;
 import org.josvaldor.prospero.terra.lithosphere.earthquake.Earthquake;
 import org.josvaldor.prospero.terra.lithosphere.volcano.Volcano;
-import org.josvaldor.prospero.terra.solar.Energy;
 import org.josvaldor.prospero.terra.unit.Coordinate;
 import org.josvaldor.prospero.terra.unit.Event;
 import org.josvaldor.prospero.terra.unit.Time;
@@ -47,11 +39,13 @@ public class Terra {
 	public Country country;
 	public City city;
 	public Tectonic tectonic;
+	public Oceanic oceanic;
 	public double scale;
 	public List<Event> eventList;
 	List<MultiPolygon> countryList;
 	List<Point> cityList;
 	List<MultiLineString> tectonicList;
+	List<Coordinate> oceanicList;
 	Tornado tornado = new Tornado();
 	Volcano volcano = new Volcano();
 	Earthquake earthquake = new Earthquake();
@@ -61,9 +55,11 @@ public class Terra {
 		city = new City();
 		country = new Country();
 		tectonic = new Tectonic();
+		oceanic = new Oceanic();
 		cityList = city.box(-180,90,180, -90);
 		countryList = country.box(-180,90,180, -90);
 		tectonicList = tectonic.box(-180,90,180, -90);
+		oceanicList = oceanic.box(-90,-180, 90, 180);
 		eventList = this.getEventList();
 		this.setScale(3.0);
 	}
@@ -153,5 +149,24 @@ public class Terra {
 				g.fillOval((int)(a[i].x*scale), -(int)(a[i].y*scale), (int)2, (int)2);
 			}
 		}
+		
+		for(Coordinate c: oceanicList) {
+			g.setColor(this.getElevationColor(c.elevation));
+			g.fillOval((int)(c.longitude*scale), (int)-(c.latitude*scale), (int)2, (int)2);
+		}
+	}
+	
+	public Color getElevationColor(double elevation) {
+//		System.out.println("getElevationColor("+elevation+")");
+		Color color = null;
+		int min = -10000;
+		int max = 10000;
+		int diff = max - min;
+		double range = 0;
+		double conversion = 0;
+		range = elevation+max;
+		conversion = range/diff;
+		color = new Color(0,0,(int)(255*conversion));
+		return color;
 	}
 }

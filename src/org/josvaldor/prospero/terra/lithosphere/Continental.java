@@ -25,10 +25,7 @@ public class Continental {
 	}
 
 	private static final int SECONDS_PER_MINUTE = 60;
-
 	public static final String HGT_EXT = ".hgt";
-
-	// alter these values for different SRTM resolutions
 	public static final int HGT_RES = 3; // resolution in arc seconds
 	public static final int HGT_ROW_LENGTH = 1201; // number of elevation values
 													// per line
@@ -41,21 +38,15 @@ public class Continental {
 		double elevation = 0;
 		try {
 			String file = getHgtFileName(latitude, longitude);
-			// given area in cache?
-
 			String fullPath = new File("./data/lithosphere/continental/", file).getPath();
 			File f = new File(fullPath);
 			ShortBuffer data = readHgtFile(fullPath);
 			this.cache.put(getHgtFileName(latitude, longitude), data);
 			elevation = readElevation(latitude, longitude);
 		} catch (FileNotFoundException e) {
-			System.err
-					.println("Get elevation from HGT " + latitude + " " + longitude + " failed: => " + e.getMessage());
-			// no problem... file not there
+			System.err.println("Get elevation from HGT " + latitude + " " + longitude + " failed: => " + e.getMessage());
 		} catch (Exception ioe) {
-			// oops...
 			ioe.printStackTrace(System.err);
-			// fallback
 		}
 		return elevation;
 	}

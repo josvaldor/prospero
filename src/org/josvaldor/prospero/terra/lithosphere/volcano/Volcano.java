@@ -18,7 +18,6 @@ public class Volcano {
 	public static void main(String[] args) {
 		Volcano a = new Volcano();
 		a.read();
-//		System.out.println();
 	}
 
 	public List<Event> read() {
@@ -57,7 +56,6 @@ public class Volcano {
 							coordinate = new Coordinate();
 							coordinate.latitude = latitude;
 							coordinate.longitude = longitude;
-							System.out.println(coordinate);
 							event.coordinate.add(coordinate);
 						}
 						int year = 0;
@@ -74,7 +72,6 @@ public class Volcano {
 							minute =0;
 							second = 0;
 							time = new Time(new GregorianCalendar(year, month - 1, day, hour, minute, second));
-							System.out.println(time);
 							event.time.add(time);
 						} catch (NumberFormatException e) {
 
@@ -88,17 +85,14 @@ public class Volcano {
 					}
 
 				} catch (FileNotFoundException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				} catch (IOException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				} finally {
 					if (inputStream != null) {
 						try {
 							inputStream.close();
 						} catch (IOException e) {
-							// TODO Auto-generated catch block
 							e.printStackTrace();
 						}
 					}

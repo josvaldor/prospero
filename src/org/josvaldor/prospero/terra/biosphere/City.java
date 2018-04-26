@@ -13,12 +13,13 @@ import org.opengis.feature.simple.SimpleFeature;
 import org.opengis.filter.Filter;
 
 import com.vividsolutions.jts.geom.GeometryFactory;
-import com.vividsolutions.jts.geom.MultiPolygon;
 import com.vividsolutions.jts.geom.Point;
 import com.vividsolutions.jts.io.WKTReader;
 
 public class City {
 
+	private String fileName = "./data/biosphere/city/ne_10m_populated_places/ne_10m_populated_places.shp";
+	
 	public static void main(String[] args) {
 		City a = new City();
 		a.point(-75.17194183200792, 40.001919022526465);
@@ -26,7 +27,7 @@ public class City {
 	}
 
 	public void point(double latitude, double longitude) {
-		File file = new File("./data/land/ne_10m_populated_places/ne_10m_populated_places.shp");
+		File file = new File(fileName);
 		try {
 			ShapefileDataStore dataStore = new ShapefileDataStore(file.toURI().toURL());
 			String[] typeNames = dataStore.getTypeNames();
@@ -49,7 +50,7 @@ public class City {
 	}
 
 	public List<Point> box(double latitudeA, double longitudeA, double latitudeB, double longitudeB) {
-		File file = new File("./data/land/ne_10m_populated_places/ne_10m_populated_places.shp");
+		File file = new File(fileName);
 		List<Point> pList = new LinkedList<Point>();
 		try {
 			ShapefileDataStore dataStore = new ShapefileDataStore(file.toURI().toURL());
