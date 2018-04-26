@@ -3,7 +3,6 @@
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
-import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
@@ -21,17 +20,16 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class EarthPanel extends JPanel implements MouseWheelListener, KeyListener, Runnable {
-    // constants
 
+	private static final long serialVersionUID = 1L;
     public static final int WIDTH = 360*3;
-    public static final int HEIGHT = 180*3;//WIDTH / 16 * 9;
-    private Terra earth;// = new Earth(new GregorianCalendar());
+    public static final int HEIGHT = 180*3;
+    private Terra earth;
     int increment = 1;
     int type = Calendar.DATE;
     boolean run = true;
     boolean realTime = true;
     Thread thread = new Thread(this);
-    
     private Image offScreenImageDrawed = null;
     private Graphics offScreenGraphicsDrawed = null;  
 
@@ -72,15 +70,6 @@ public class EarthPanel extends JPanel implements MouseWheelListener, KeyListene
         earth.draw(offScreenGraphicsDrawed);
         g.drawImage(offScreenImageDrawed, 0, 0, null);
     }
-    
-//    public void draw(Graphics g) {
-//        g.setColor(Color.BLACK);
-//        g.fillRect(0, 0, WIDTH, HEIGHT);
-//        Graphics2D g2d = (Graphics2D) g;
-//        g2d.translate(WIDTH / 2.0, HEIGHT / 2.0);
-//        earth.draw(g2d);
-//        g.dispose();
-//    }
 
     @Override
     public void mouseWheelMoved(MouseWheelEvent e) {

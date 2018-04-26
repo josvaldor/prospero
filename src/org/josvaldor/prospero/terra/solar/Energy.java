@@ -7,8 +7,7 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.List;
-import java.util.Map;
-
+  
 import org.josvaldor.prospero.terra.unit.Coordinate;
 
 import com.google.gson.Gson;
@@ -18,7 +17,6 @@ public class Energy {
 	public List<Coordinate> read(String time) {
 		List<Coordinate> list = null;
 		try {
-
 			URL url = new URL("http://localhost:8080/earth?time=" + time);
 			HttpURLConnection conn = (HttpURLConnection) url.openConnection();
 			conn.setRequestMethod("GET");
@@ -34,16 +32,11 @@ public class Energy {
 				}.getType());
 			}
 			conn.disconnect();
-
 		} catch (MalformedURLException e) {
-
 			e.printStackTrace();
-
 		} catch (IOException e) {
-
 			e.printStackTrace();
-
 		}
 		return list;
-	} 
+	}
 }

@@ -15,6 +15,7 @@ import org.josvaldor.prospero.terra.unit.Time;
 import org.josvaldor.prospero.terra.unit.Type;
 
 public class Volcano {
+	
 	public static void main(String[] args) {
 		Volcano a = new Volcano();
 		a.read();
@@ -28,15 +29,11 @@ public class Volcano {
 		for (File f : files) {
 			if (f.isFile()) {
 				BufferedReader inputStream = null;
-
 				try {
 					inputStream = new BufferedReader(new FileReader(f));
 					String line;
 					line = inputStream.readLine();
 					String[] labels = line.split(",");
-//					for (int i = 0; i < labels.length; i++) {
-//						System.out.println(i + ":" + labels[i]);
-//					}
 					String[] values = null;
 					Event event;
 					Coordinate coordinate;
@@ -76,14 +73,13 @@ public class Volcano {
 						} catch (NumberFormatException e) {
 
 						}
-//						event.attribute.put(labels[9], values[9]);
-//						event.attribute.put(labels[10], values[10]);
-//						event.attribute.put(labels[11], values[11]);
-//						event.attribute.put(labels[12], values[12]);
-//						event.attribute.put(labels[13], values[13]);
+						event.attribute.put(labels[9], values[9]);
+						event.attribute.put(labels[10], values[10]);
+						event.attribute.put(labels[11], values[11]);
+						event.attribute.put(labels[12], values[12]);
+						event.attribute.put(labels[13], values[13]);
 						eventList.add(event);
 					}
-
 				} catch (FileNotFoundException e) {
 					e.printStackTrace();
 				} catch (IOException e) {
@@ -101,5 +97,4 @@ public class Volcano {
 		}
 		return eventList;
 	}
-
 }
