@@ -2,13 +2,9 @@ package org.josvaldor.prospero.energy.system.moon;
 
 import org.apache.commons.math3.geometry.euclidean.threed.Vector3D;
 import org.josvaldor.prospero.energy.Orbital;
-import org.josvaldor.prospero.energy.Spheroid;
 
 import java.awt.Color;
 import java.awt.Graphics;
-import java.awt.Graphics2D;
-import java.text.ParseException;
-import java.util.ArrayList;
 import java.util.List;
 
 public class Moon extends Orbital {
@@ -18,20 +14,9 @@ public class Moon extends Orbital {
         this.name = "moon";
     }
     
-/*	public void draw(Graphics2D g) {
-		g.setColor(this.color);
-		double x = this.position.getX() * this.scale;
-		double y = this.position.getY() * this.scale;
-		double radius = 5;
-		x = x - (radius / 2);
-		y = y - (radius / 2);
-		g.fillOval((int)x, (int)y, (int) radius, (int) radius);
-	}*/
-    
 	public void draw(Graphics g) {
 		double x = this.position.getX() * scale;
 		double y = this.position.getY() * scale;
-//		g.setColor(Color.yellow);
 		g.drawLine((int) x, (int) y, (int) (this.force.getX() * scale), (int) (this.force.getY() * scale));
 		g.setColor(this.color);
 		double radius = 10;

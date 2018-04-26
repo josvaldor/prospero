@@ -3,7 +3,6 @@ package org.josvaldor.prospero.energy.system.planet;
 import org.josvaldor.prospero.energy.Orbital;
 import java.awt.Color;
 import java.awt.Graphics;
-import java.awt.Graphics2D;
 import java.util.List;
 
 import org.apache.commons.math3.geometry.euclidean.threed.Vector3D;

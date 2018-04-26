@@ -157,7 +157,6 @@ public class Terra {
 	}
 	
 	public Color getElevationColor(double elevation) {
-//		System.out.println("getElevationColor("+elevation+")");
 		Color color = null;
 		int min = -10000;
 		int max = 10000;

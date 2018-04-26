@@ -3,7 +3,6 @@ package org.josvaldor.prospero.energy.system.star;
 import org.josvaldor.prospero.energy.Orbital;
 import java.awt.Color;
 import java.awt.Graphics;
-import java.awt.Graphics2D;
 
 public class Star extends Orbital {
 

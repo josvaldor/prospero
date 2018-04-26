@@ -1,21 +1,11 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package org.josvaldor.prospero.energy.system.planet.uranus;
 
 import org.josvaldor.prospero.energy.Orbital;
 import org.josvaldor.prospero.energy.Unit;
 import org.josvaldor.prospero.energy.system.planet.Planet;
 import java.awt.Color;
-import java.awt.Graphics2D;
 import java.util.Calendar;
 
-/**
- *
- * @author jorodriguez
- */
 public class Uranus extends Planet {
 
     public Uranus(Calendar calendar,Orbital centroid) {
