@@ -2,6 +2,7 @@ package org.josvaldor.prospero.energy.system.star;
 
 import org.josvaldor.prospero.energy.Orbital;
 import java.awt.Color;
+import java.awt.Graphics;
 import java.awt.Graphics2D;
 
 public class Star extends Orbital {
@@ -11,7 +12,7 @@ public class Star extends Orbital {
 		this.name = "star";
 	}
 
-	public void draw(Graphics2D g) {
+	public void draw(Graphics g) {
 		g.setColor(this.color);
 		double x = this.position.getX() * this.scale;
 		double y = this.position.getY() * this.scale;

@@ -55,10 +55,10 @@ public class EarthPanel extends JPanel implements MouseWheelListener, KeyListene
     @Override
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
-//        this.g2 = (Graphics2D) g;
-        paint(g);
+        this.paint(g);
     }
 
+    @Override
     public void paint(Graphics g) {
     	if (offScreenImageDrawed == null) {                   
             offScreenImageDrawed = createImage(WIDTH, HEIGHT);   

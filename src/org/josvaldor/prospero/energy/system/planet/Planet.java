@@ -2,6 +2,7 @@ package org.josvaldor.prospero.energy.system.planet;
 
 import org.josvaldor.prospero.energy.Orbital;
 import java.awt.Color;
+import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.util.List;
 
@@ -14,7 +15,7 @@ public class Planet extends Orbital {
 		this.name = "planet";
 	}
 
-	public void draw(Graphics2D g) {
+	public void draw(Graphics g) {
 		double x = this.position.getX() * scale;
 		double y = this.position.getY() * scale;
 		g.setColor(Color.yellow);

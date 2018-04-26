@@ -21,6 +21,7 @@ import org.josvaldor.prospero.energy.system.planet.uranus.Uranus;
 import org.josvaldor.prospero.energy.system.planet.venus.Venus;
 import org.josvaldor.prospero.energy.system.star.sun.Sun;
 import java.awt.Color;
+import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -396,12 +397,12 @@ public class Solar extends Orbital {
 
 	}
 
-	public void drawDate(Graphics2D g, Calendar c) {
+	public void drawDate(Graphics g, Calendar c) {
 		g.setColor(Color.WHITE);
 		g.drawString(this.getCalendarString(null, c) + "", -100, -150);
 	}
 
-	public void draw(Graphics2D g) {
+	public void draw(Graphics g) {
 		if (this.time != null) {
 			drawDate(g, this.time);
 		}

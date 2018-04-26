@@ -5,6 +5,7 @@ import org.josvaldor.prospero.energy.Orbital;
 import org.josvaldor.prospero.energy.Spheroid;
 
 import java.awt.Color;
+import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.text.ParseException;
 import java.util.ArrayList;
@@ -27,7 +28,7 @@ public class Moon extends Orbital {
 		g.fillOval((int)x, (int)y, (int) radius, (int) radius);
 	}*/
     
-	public void draw(Graphics2D g) {
+	public void draw(Graphics g) {
 		double x = this.position.getX() * scale;
 		double y = this.position.getY() * scale;
 //		g.setColor(Color.yellow);

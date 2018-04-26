@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.Image;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
@@ -31,6 +32,9 @@ public class SolarPanel extends JPanel implements MouseWheelListener, KeyListene
     boolean run = true;
     boolean realTime = true;
     Thread thread = new Thread(this);
+    
+    private Image offScreenImageDrawed = null;
+    private Graphics offScreenGraphicsDrawed = null;  
 
     public SolarPanel(){
         super();
@@ -55,18 +59,30 @@ public class SolarPanel extends JPanel implements MouseWheelListener, KeyListene
     @Override
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
-        this.g2 = (Graphics2D) g;
-        draw(g2);
+        this.paint(g);
+    }
+    
+    @Override
+    public void paint(Graphics g) {
+    	if (offScreenImageDrawed == null) {                   
+            offScreenImageDrawed = createImage(WIDTH, HEIGHT);   
+        }          
+        offScreenGraphicsDrawed = offScreenImageDrawed.getGraphics(); 
+        offScreenGraphicsDrawed.setColor(Color.BLACK);
+        offScreenGraphicsDrawed.fillRect(0, 0, WIDTH, HEIGHT);
+        offScreenGraphicsDrawed.translate((int)(WIDTH / 2.0),(int)( HEIGHT / 2.0));
+        solar.draw(offScreenGraphicsDrawed);
+        g.drawImage(offScreenImageDrawed, 0, 0, null);
     }
 
-    public void draw(Graphics g) {
-        g.setColor(Color.BLACK);
-        g.fillRect(0, 0, WIDTH, HEIGHT);
-        Graphics2D g2d = (Graphics2D) g;
-        g2d.translate(WIDTH / 2.0, HEIGHT / 2.0);
-        solar.draw(g2d);
-        g.dispose();
-    }
+//    public void this.paint(Graphics g) {
+//        g.setColor(Color.BLACK);
+//        g.fillRect(0, 0, WIDTH, HEIGHT);
+//        Graphics2D g2d = (Graphics2D) g;
+//        g2d.translate(WIDTH / 2.0, HEIGHT / 2.0);
+//        solar.this.paint(g2d);
+//        g.dispose();
+//    }
 
     @Override
     public void mouseWheelMoved(MouseWheelEvent e) {
@@ -82,7 +98,7 @@ public class SolarPanel extends JPanel implements MouseWheelListener, KeyListene
             this.solar.setTime(c);
             this.realTime = false;
         }
-        draw(this.getGraphics());
+        this.paint(this.getGraphics());
 
     }
 
@@ -119,7 +135,7 @@ public class SolarPanel extends JPanel implements MouseWheelListener, KeyListene
             this.solar.setTime(c);
             this.realTime = false;
         }
-        draw(this.getGraphics());
+        this.paint(this.getGraphics());
     }
 
     @Override
@@ -142,7 +158,7 @@ public class SolarPanel extends JPanel implements MouseWheelListener, KeyListene
                 this.solar.setScale(scale / 2);
             }
         }
-        draw(this.getGraphics());
+        this.paint(this.getGraphics());
 
     }
 
@@ -153,7 +169,7 @@ public class SolarPanel extends JPanel implements MouseWheelListener, KeyListene
                 try {
                     this.setTime(new GregorianCalendar());
                     sleep(1000);
-                    draw(this.getGraphics());
+                    this.paint(this.getGraphics());
                 } catch (InterruptedException ex) {
                     Logger.getLogger(SolarPanel.class.getName()).log(Level.SEVERE, null, ex);
                 }

@@ -15,7 +15,7 @@ import java.util.List;
  * @author jorodriguez
  */
 public class Earth extends Planet {
-	Terra terra;
+//	Terra terra;
 
 	public Earth(Calendar calendar, Orbital centroid) {
 		super();
@@ -42,17 +42,17 @@ public class Earth extends Planet {
 		this.angularVelocity = 7.292115053925690e-05;
 		this.obliquity = 23.439292;
 		this.rotation = 23.9345;// hour
-		this.terra = new Terra(this.time);
+//		this.terra = new Terra(this.time);
 	}
 	
 	@Override
 	public void setTime(Calendar time){
 		super.setTime(time);
-		this.terra.setTime(this.time);
-		List<Event> eventList = this.terra.eventList;
-		List<Event> timeList = this.terra.getTimeEventList(eventList, time);
-		for(Event e: timeList){
-			System.out.println(e);
-		}
+//		this.terra.setTime(this.time);
+//		List<Event> eventList = this.terra.eventList;
+//		List<Event> timeList = this.terra.getTimeEventList(eventList, time);
+//		for(Event e: timeList){
+//			System.out.println(e);
+//		}
 	}
 }
