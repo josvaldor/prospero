@@ -14,6 +14,7 @@ import java.util.List;
 import org.josvaldor.prospero.terra.atmosphere.tornado.Tornado;
 import org.josvaldor.prospero.terra.biosphere.City;
 import org.josvaldor.prospero.terra.biosphere.Country;
+import org.josvaldor.prospero.terra.lithosphere.Continental;
 import org.josvaldor.prospero.terra.lithosphere.Oceanic;
 import org.josvaldor.prospero.terra.lithosphere.Tectonic;
 import org.josvaldor.prospero.terra.lithosphere.earthquake.Earthquake;
@@ -40,12 +41,14 @@ public class Terra {
 	public City city;
 	public Tectonic tectonic;
 	public Oceanic oceanic;
+	public Continental continental;
 	public double scale;
 	public List<Event> eventList;
 	List<MultiPolygon> countryList;
 	List<Point> cityList;
 	List<MultiLineString> tectonicList;
 	List<Coordinate> oceanicList;
+	List<Coordinate> continentalList;
 	Tornado tornado = new Tornado();
 	Volcano volcano = new Volcano();
 	Earthquake earthquake = new Earthquake();
@@ -56,10 +59,13 @@ public class Terra {
 		country = new Country();
 		tectonic = new Tectonic();
 		oceanic = new Oceanic();
+		continental = new Continental();
 		cityList = city.box(-180,90,180, -90);
 		countryList = country.box(-180,90,180, -90);
 		tectonicList = tectonic.box(-180,90,180, -90);
-		oceanicList = oceanic.box(-90,-180, 90, 180);
+//		oceanicList = oceanic.box(-90,-180, 90, 180);
+		oceanicList = new LinkedList<Coordinate>();
+		continentalList = continental.box(-90,-180, 90, 180);
 		eventList = this.getEventList();
 		this.setScale(3.0);
 	}
@@ -151,12 +157,17 @@ public class Terra {
 		}
 		
 		for(Coordinate c: oceanicList) {
-			g.setColor(this.getElevationColor(c.elevation));
+			g.setColor(this.getElevationColor(c.elevation,'b'));
+			g.fillOval((int)(c.longitude*scale), (int)-(c.latitude*scale), (int)2, (int)2);
+		}
+		
+		for(Coordinate c: continentalList) {
+			g.setColor(this.getElevationColor(c.elevation,'g'));
 			g.fillOval((int)(c.longitude*scale), (int)-(c.latitude*scale), (int)2, (int)2);
 		}
 	}
 	
-	public Color getElevationColor(double elevation) {
+	public Color getElevationColor(double elevation, char c) {
 		Color color = null;
 		int min = -10000;
 		int max = 10000;
@@ -165,7 +176,20 @@ public class Terra {
 		double conversion = 0;
 		range = elevation+max;
 		conversion = range/diff;
-		color = new Color(0,0,(int)(255*conversion));
+		switch(c) {
+		case 'r':{
+			color = new Color((int)(255*conversion),0,0);
+			break;
+		}
+		case 'g':{
+			color = new Color(0,(int)(255*conversion),0);
+			break;
+		}
+		case 'b':{
+			color = new Color(0,0,(int)(255*conversion));
+			break;
+		}
+		}
 		return color;
 	}
 }

@@ -9,13 +9,8 @@ import org.josvaldor.prospero.energy.Orbital;
 import org.josvaldor.prospero.energy.Unit;
 import org.josvaldor.prospero.energy.system.planet.Planet;
 import java.awt.Color;
-import java.awt.Graphics2D;
 import java.util.Calendar;
 
-/**
- *
- * @author jorodriguez
- */
 public class Jupiter extends Planet {
     
     public Jupiter(Calendar calendar,Orbital centroid) {

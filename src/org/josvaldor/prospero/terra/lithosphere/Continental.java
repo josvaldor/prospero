@@ -8,6 +8,10 @@ import java.nio.ByteOrder;
 import java.nio.ShortBuffer;
 import java.nio.channels.FileChannel;
 import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
+
+import org.josvaldor.prospero.terra.unit.Coordinate;
 
 /**
  * Class HgtReader reads data from SRTM HGT files. Currently this class is
@@ -33,18 +37,37 @@ public class Continental {
 												// 'void data' in HGT file
 
 	private final HashMap<String, ShortBuffer> cache = new HashMap<>();
+	
+	public List<Coordinate> box(double latA, double lonA, double latB, double lonB) {
+		List<Coordinate> cList = new LinkedList<Coordinate>();
+		Coordinate c = null;
+		double increment = 1.0;
+		Double elevation = null;
+		for(double i=latA;i<latB;i+=increment) {
+			for(double j=lonA;j<lonB;j+=increment) {
+				elevation = this.getElevationFromHgt(i, j);
+				if(elevation != null) {
+					c = new Coordinate();
+					c.latitude = i;
+					c.longitude = j;
+					c.elevation = elevation;
+					cList.add(c);
+				}
+			}
+		}
+		return cList;
+	}
 
-	public double getElevationFromHgt(double latitude, double longitude) {
-		double elevation = 0;
+	public Double getElevationFromHgt(double latitude, double longitude) {
+		Double elevation = null;
 		try {
 			String file = getHgtFileName(latitude, longitude);
 			String fullPath = new File("./data/lithosphere/continental/", file).getPath();
-			File f = new File(fullPath);
 			ShortBuffer data = readHgtFile(fullPath);
 			this.cache.put(getHgtFileName(latitude, longitude), data);
 			elevation = readElevation(latitude, longitude);
 		} catch (FileNotFoundException e) {
-			System.err.println("Get elevation from HGT " + latitude + " " + longitude + " failed: => " + e.getMessage());
+			 System.err.println("Get elevation from HGT " + latitude + " " + longitude + " failed: => " + e.getMessage());
 		} catch (Exception ioe) {
 			ioe.printStackTrace(System.err);
 		}

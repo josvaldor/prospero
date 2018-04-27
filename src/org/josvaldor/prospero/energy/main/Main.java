@@ -9,20 +9,14 @@
  */
 package org.josvaldor.prospero.energy.main;
 
-import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import org.josvaldor.prospero.energy.Coordinate;
-import org.josvaldor.prospero.energy.Space;
 import org.josvaldor.prospero.energy.system.Solar;
 import org.josvaldor.prospero.energy.system.planet.earth.Earth;
 import org.josvaldor.prospero.energy.system.star.sun.Sun;
 
-import java.text.ParseException;
-import java.util.GregorianCalendar;
 import java.util.List;
-import java.util.Map;
-
 import javax.swing.JFrame;
 
 @SpringBootApplication
