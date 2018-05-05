@@ -169,8 +169,8 @@ public class Terra {
 	
 	public Color getElevationColor(double elevation, char c) {
 		Color color = null;
-		int min = -10000;
-		int max = 10000;
+		int min = -50000;
+		int max = 50000;
 		int diff = max - min;
 		double range = 0;
 		double conversion = 0;

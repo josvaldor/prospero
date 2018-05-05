@@ -23,11 +23,12 @@ public class City {
 	public static void main(String[] args) {
 		City a = new City();
 		a.point(-75.17194183200792, 40.001919022526465);
-		//a.box(110, -45, 155, -10);
+		a.box(110, -45, 155, -10);
 	}
 
-	public void point(double latitude, double longitude) {
+	public Point point(double latitude, double longitude) {
 		File file = new File(fileName);
+		Point p = null;
 		try {
 			ShapefileDataStore dataStore = new ShapefileDataStore(file.toURI().toURL());
 			String[] typeNames = dataStore.getTypeNames();
@@ -36,10 +37,13 @@ public class City {
 			Filter filter = ECQL.toFilter(" CONTAINS (the_geom, POINT(" + latitude + " " + longitude + "))");
 			SimpleFeatureCollection collection = featureSource.getFeatures(filter);
 			SimpleFeatureIterator iterator = collection.features();
+			
 			try {
 				while (iterator.hasNext()) {
 					SimpleFeature feature = iterator.next();
-					System.out.println(feature.getAttribute("NAMEASCII"));
+					GeometryFactory geometryFactory = JTSFactoryFinder.getGeometryFactory( null );
+					WKTReader reader = new WKTReader( geometryFactory );
+					p = (Point) reader.read(feature.getDefaultGeometry()+"");
 				}
 			} finally {
 				iterator.close();
@@ -47,6 +51,7 @@ public class City {
 
 		} catch (Throwable e) {
 		}
+		return p;
 	}
 
 	public List<Point> box(double latitudeA, double longitudeA, double latitudeB, double longitudeB) {
@@ -67,8 +72,8 @@ public class City {
 					WKTReader reader = new WKTReader( geometryFactory );
 					Point p = (Point) reader.read(feature.getDefaultGeometry()+"");
 					pList.add(p);
-//					String name2 = (String) feature.getAttribute("NAMEASCII");
-//					System.out.println("Name:" + name2);
+//					String name = (String) feature.getAttribute("NAMEASCII");
+//					System.out.println("Name:" + name);
 				}
 			} finally {
 				iterator.close();

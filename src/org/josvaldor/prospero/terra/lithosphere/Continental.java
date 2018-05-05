@@ -3,6 +3,7 @@ package org.josvaldor.prospero.terra.lithosphere;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.lang.reflect.Method;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 import java.nio.ShortBuffer;
@@ -36,7 +37,7 @@ public class Continental {
 	public static final int HGT_VOID = -32768; // magic number which indicates
 												// 'void data' in HGT file
 
-	private final HashMap<String, ShortBuffer> cache = new HashMap<>();
+	private final HashMap<String, ShortBuffer> cache = new HashMap<String, ShortBuffer>();
 	
 	public List<Coordinate> box(double latA, double lonA, double latB, double lonB) {
 		List<Coordinate> cList = new LinkedList<Coordinate>();
@@ -51,6 +52,7 @@ public class Continental {
 					c.latitude = i;
 					c.longitude = j;
 					c.elevation = elevation;
+					System.out.println(c);
 					cList.add(c);
 				}
 			}
@@ -67,13 +69,14 @@ public class Continental {
 			this.cache.put(getHgtFileName(latitude, longitude), data);
 			elevation = readElevation(latitude, longitude);
 		} catch (FileNotFoundException e) {
-			 System.err.println("Get elevation from HGT " + latitude + " " + longitude + " failed: => " + e.getMessage());
+//			 System.err.println("Get elevation from HGT " + latitude + " " + longitude + " failed: => " + e.getMessage());
 		} catch (Exception ioe) {
 			ioe.printStackTrace(System.err);
 		}
 		return elevation;
 	}
 
+	ByteBuffer bb;
 	@SuppressWarnings("resource")
 	private ShortBuffer readHgtFile(String file) throws Exception {
 		// CheckParameterUtil.ensureParameterNotNull(file);
@@ -84,15 +87,22 @@ public class Continental {
 			// 'finally' clause???
 			fc = new FileInputStream(file).getChannel();
 			// choose the right endianness
-
-			ByteBuffer bb = ByteBuffer.allocateDirect((int) fc.size());
-			while (bb.remaining() > 0)
-				fc.read(bb);
-			System.out.println(bb);
-			bb.flip();
-			// sb = bb.order(ByteOrder.LITTLE_ENDIAN).asShortBuffer();
-			sb = bb.order(ByteOrder.BIG_ENDIAN).asShortBuffer();
-		} finally {
+//			System.out.println((int)fc.size());
+			if(fc.size()>0){
+				bb = ByteBuffer.allocateDirect((int)fc.size());
+				while (bb.remaining() > 0)
+					fc.read(bb);
+				bb.flip();
+				// sb = bb.order(ByteOrder.LITTLE_ENDIAN).asShortBuffer();
+				sb = bb.order(ByteOrder.BIG_ENDIAN).asShortBuffer();
+				
+			}
+			fc.close();
+		} 
+//		catch (OutOfMemoryError E) {
+//		    // release some (all) of the above objects
+//		}
+		finally {
 			if (fc != null)
 				fc.close();
 		}
@@ -118,7 +128,7 @@ public class Continental {
 
 		if (sb == null) {
 			// return ElevationHelper.NO_ELEVATION;
-			System.out.println("No elevation");
+//			System.out.println("No elevation");
 			return 0;
 		}
 
@@ -134,8 +144,8 @@ public class Continental {
 		row = HGT_ROW_LENGTH - row;
 		int cell = (HGT_ROW_LENGTH * (row - 1)) + col;
 
-		System.out.println(
-				"Read SRTM elevation data from row/col/cell " + row + "," + col + ", " + cell + ", " + sb.limit());
+//		System.out.println(
+//				"Read SRTM elevation data from row/col/cell " + row + "," + col + ", " + cell + ", " + sb.limit());
 
 		// valid position in buffer?
 		if (cell < sb.limit()) {
